@@ -2,8 +2,7 @@
   "name": "reactjs",
   "version": "0.1.0",
   "engines": {
-    "node": "20.11.1",
-    "npm": "10.2.4"
+    "node": "20.19.6"
   },
   "private": true,
   "dependencies": {
