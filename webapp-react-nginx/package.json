@@ -1,6 +1,10 @@
 {
   "name": "reactjs",
   "version": "0.1.0",
+  "engines": {
+    "node": "20.11.1",
+    "npm": "10.2.4"
+  },
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
