@@ -13,15 +13,15 @@ endpoints:
 
 dependencies:
   endpoints:
-    - component: doclet-nats
-      name: nats
+    - component: gcp-nats
+      name: tcp
       visibility: project
       envBindings:
-        address: _
+        address: NATS_ADDR
 
 configurations:
   env:
     - name: DOCLET_COLLAB_ADDR
       value: ":8090"
     - name: DOCLET_NATS_URL
-      value: "nats://doclet-nats:4222"
+      value: "nats://gcp-nats:4222"
