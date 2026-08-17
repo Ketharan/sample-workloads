@@ -3,10 +3,14 @@ apiVersion: openchoreo.dev/v1alpha1
 metadata:
   name: document-service
 
+# Buildpack topology: there is no nginx proxy in front of this service, so the
+# browser calls it directly and the endpoint must be reachable from outside.
 endpoints:
   - name: api
     port: 8080
     type: HTTP
+    visibility:
+      - external
 
 dependencies:
   endpoints:

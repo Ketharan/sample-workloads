@@ -19,8 +19,21 @@ function resolve(path: string): string {
   return `${BASE}${path.replace(/^\//, '')}`
 }
 
+// When the app is served by a static file server rather than the nginx image, there is
+// no /api and /ws reverse proxy, so the browser must call the services directly. Baking
+// the URLs in at build time covers that; they take precedence over config.json.
+const BUILT_IN_DOC_URL = import.meta.env.VITE_DOC_SERVICE_URL
+const BUILT_IN_WS_URL = import.meta.env.VITE_COLLAB_WS_URL
+
 export async function loadConfig(): Promise<AppConfig> {
   if (cachedConfig) {
+    return cachedConfig
+  }
+  if (BUILT_IN_DOC_URL && BUILT_IN_WS_URL) {
+    cachedConfig = {
+      docServiceUrl: BUILT_IN_DOC_URL,
+      collabWsUrl: BUILT_IN_WS_URL,
+    }
     return cachedConfig
   }
   try {

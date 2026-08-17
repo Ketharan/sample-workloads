@@ -61,8 +61,12 @@ export class DocletProvider {
   }
 
   private connect() {
+    // wsUrl may be a path (nginx-proxied deployments) or an absolute ws(s):// URL
+    // (static-server deployments that talk to the collab service directly).
     const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:'
-    const base = `${protocol}//${window.location.host}${this.wsUrl}`
+    const base = /^wss?:\/\//.test(this.wsUrl)
+      ? this.wsUrl
+      : `${protocol}//${window.location.host}${this.wsUrl}`
     const url = `${base}?document_id=${encodeURIComponent(this.documentId)}&client_id=${encodeURIComponent(this.clientId)}`
 
     this.ws = new WebSocket(url)

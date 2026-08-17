@@ -3,10 +3,13 @@ apiVersion: openchoreo.dev/v1alpha1
 metadata:
   name: collab-service
 
+# Buildpack topology: no nginx proxy, so the browser opens the WebSocket directly.
 endpoints:
   - name: ws
     port: 8090
     type: Websocket
+    visibility:
+      - external
 
 dependencies:
   endpoints:
