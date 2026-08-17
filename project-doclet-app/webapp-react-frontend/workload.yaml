@@ -1,0 +1,37 @@
+apiVersion: openchoreo.dev/v1alpha1
+
+metadata:
+  name: frontend
+
+# nginx proxies /api/document-svc and /ws/collab-svc to the backends, so the browser
+# only ever talks to this component. document/collab therefore stay at project
+# visibility -- see nginx.conf.template.
+endpoints:
+  - name: webapp
+    port: 80
+    type: HTTP
+    visibility:
+      - external
+
+dependencies:
+  endpoints:
+    - component: doclet-document
+      name: api
+      visibility: project
+      envBindings:
+        address: _
+    - component: doclet-collab
+      name: ws
+      visibility: project
+      envBindings:
+        address: _
+
+configurations:
+  env:
+    # docker-entrypoint.sh envsubst's these into nginx.conf.template as proxy_pass
+    # targets, so both need an http:// scheme -- nginx proxy_pass rejects ws://
+    # even for a WebSocket upgrade. Set literally rather than via envBindings.
+    - name: DOC_SERVICE_URL
+      value: "http://doclet-document:8080"
+    - name: COLLAB_SERVICE_URL
+      value: "http://doclet-collab:8090"

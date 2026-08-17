@@ -1,0 +1,9 @@
+apiVersion: openchoreo.dev/v1alpha1
+
+metadata:
+  name: nats
+
+endpoints:
+  - name: nats
+    port: 4222
+    type: TCP

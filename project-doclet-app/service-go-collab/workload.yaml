@@ -1,0 +1,24 @@
+apiVersion: openchoreo.dev/v1alpha1
+
+metadata:
+  name: collab-service
+
+endpoints:
+  - name: ws
+    port: 8090
+    type: Websocket
+
+dependencies:
+  endpoints:
+    - component: doclet-nats
+      name: nats
+      visibility: project
+      envBindings:
+        address: _
+
+configurations:
+  env:
+    - name: DOCLET_COLLAB_ADDR
+      value: ":8090"
+    - name: DOCLET_NATS_URL
+      value: "nats://doclet-nats:4222"

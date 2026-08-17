@@ -1,0 +1,18 @@
+apiVersion: openchoreo.dev/v1alpha1
+
+metadata:
+  name: postgres
+
+endpoints:
+  - name: postgres
+    port: 5432
+    type: TCP
+
+configurations:
+  env:
+    - name: POSTGRES_USER
+      value: "doclet"
+    - name: POSTGRES_PASSWORD
+      value: "doclet"
+    - name: POSTGRES_DB
+      value: "doclet"

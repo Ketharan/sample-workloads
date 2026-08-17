@@ -1,0 +1,33 @@
+apiVersion: openchoreo.dev/v1alpha1
+
+metadata:
+  name: document-service
+
+endpoints:
+  - name: api
+    port: 8080
+    type: HTTP
+
+dependencies:
+  endpoints:
+    - component: doclet-postgres
+      name: postgres
+      visibility: project
+      envBindings:
+        address: _
+    - component: doclet-nats
+      name: nats
+      visibility: project
+      envBindings:
+        address: _
+
+configurations:
+  env:
+    - name: DOCLET_DOCUMENT_ADDR
+      value: ":8080"
+    # Composed URIs are set literally: dependency envBindings inject the resolved
+    # address only, and there is no $(VAR) interpolation between env values.
+    - name: DOCLET_DATABASE_URL
+      value: "postgres://doclet:doclet@doclet-postgres:5432/doclet?sslmode=disable"
+    - name: DOCLET_NATS_URL
+      value: "nats://doclet-nats:4222"
