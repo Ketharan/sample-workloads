@@ -3,6 +3,10 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . ./
+# Path prefix the app is served under. Vite bakes this into the asset URLs and
+# import.meta.env.BASE_URL; leave as / when serving from a host root.
+ARG VITE_BASE_PATH=/
+ENV VITE_BASE_PATH=$VITE_BASE_PATH
 RUN npm run build
 
 FROM nginx:1.27-alpine

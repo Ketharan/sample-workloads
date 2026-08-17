@@ -1,4 +1,4 @@
 {
-  "docServiceUrl": "/api/document-svc",
-  "collabWsUrl": "/ws/collab-svc"
+  "docServiceUrl": "api/document-svc",
+  "collabWsUrl": "ws/collab-svc"
 }
