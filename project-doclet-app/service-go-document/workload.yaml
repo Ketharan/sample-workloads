@@ -10,16 +10,18 @@ endpoints:
 
 dependencies:
   endpoints:
+    # Each envBindings target must be a distinct env var name: `_` is a throwaway
+    # placeholder and two of them collide as duplicate container env entries.
     - component: doclet-postgres
       name: postgres
       visibility: project
       envBindings:
-        address: _
+        address: POSTGRES_ADDR
     - component: doclet-nats
       name: nats
       visibility: project
       envBindings:
-        address: _
+        address: NATS_ADDR
 
 configurations:
   env:

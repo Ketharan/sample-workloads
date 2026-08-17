@@ -15,16 +15,18 @@ endpoints:
 
 dependencies:
   endpoints:
+    # Each envBindings target must be a distinct env var name: `_` is a throwaway
+    # placeholder and two of them collide as duplicate container env entries.
     - component: doclet-document
       name: api
       visibility: project
       envBindings:
-        address: _
+        address: DOC_SERVICE_ADDR
     - component: doclet-collab
       name: ws
       visibility: project
       envBindings:
-        address: _
+        address: COLLAB_SERVICE_ADDR
 
 configurations:
   env:
