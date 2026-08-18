@@ -101,6 +101,13 @@ function setToken(t) {
 }
 setToken();
 
+// The app may be served under a path prefix rather than at a host root -- an OpenChoreo
+// endpoint route is /<component>-<endpoint>, for example. Absolute "/api/..." URLs would
+// resolve against the origin and miss that prefix, so every call 404s. Derive the prefix
+// from where this page was actually served and prepend it.
+// window.__BASE_PATH__ lets a server inject the value explicitly if it ever needs to.
+const BASE_PATH = (window.__BASE_PATH__ ?? window.location.pathname).replace(/\/+$/, '');
+
 async function call(method, path, body, opts = {}) {
   const t0 = performance.now();
   const o = { method, headers: {} };
@@ -109,7 +116,7 @@ async function call(method, path, body, opts = {}) {
     o.body = JSON.stringify(body);
   }
   if (opts.auth !== false && token()) o.headers['X-Auth-Token'] = token();
-  const url = path + qs();
+  const url = BASE_PATH + path + qs();
   const r = await fetch(url, o);
   const ms = Math.round(performance.now() - t0);
   let data; try { data = await r.json(); } catch { data = null; }
