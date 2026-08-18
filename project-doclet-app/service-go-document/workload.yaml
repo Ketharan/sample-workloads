@@ -16,12 +16,12 @@ dependencies:
   endpoints:
     # Each envBindings target must be a distinct env var name: `_` is a throwaway
     # placeholder and two of them collide as duplicate container env entries.
-    - component: gcp-postgres
+    - component: pkt-postgres
       name: tcp
       visibility: project
       envBindings:
         address: POSTGRES_ADDR
-    - component: gcp-nats
+    - component: pkt-nats
       name: tcp
       visibility: project
       envBindings:
@@ -34,6 +34,6 @@ configurations:
     # Composed URIs are set literally: dependency envBindings inject the resolved
     # address only, and there is no $(VAR) interpolation between env values.
     - name: DOCLET_DATABASE_URL
-      value: "postgres://doclet:doclet@gcp-postgres:5432/doclet?sslmode=disable"
+      value: "postgres://doclet:doclet@pkt-postgres:5432/doclet?sslmode=disable"
     - name: DOCLET_NATS_URL
-      value: "nats://gcp-nats:4222"
+      value: "nats://pkt-nats:4222"

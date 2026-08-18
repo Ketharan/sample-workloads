@@ -13,7 +13,7 @@ endpoints:
 
 dependencies:
   endpoints:
-    - component: gcp-nats
+    - component: pkt-nats
       name: tcp
       visibility: project
       envBindings:
@@ -24,4 +24,4 @@ configurations:
     - name: DOCLET_COLLAB_ADDR
       value: ":8090"
     - name: DOCLET_NATS_URL
-      value: "nats://gcp-nats:4222"
+      value: "nats://pkt-nats:4222"

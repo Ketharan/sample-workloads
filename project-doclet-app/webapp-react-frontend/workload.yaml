@@ -3,10 +3,11 @@ apiVersion: openchoreo.dev/v1alpha1
 metadata:
   name: frontend
 
-# Buildpack topology: the app is served by `serve` (see package.json start script),
-# not nginx, so there is no /api and /ws reverse proxy. The browser talks to the
-# document and collab services directly using URLs baked in at build time via
-# VITE_DOC_SERVICE_URL / VITE_COLLAB_WS_URL.
+# Buildpack topology: Paketo serves the built SPA via its web-server buildpack
+# (BP_WEB_SERVER=nginx) on 8080. That nginx only serves static files -- it carries
+# none of the /api and /ws reverse-proxy config from the hand-written Dockerfile --
+# so the browser talks to the document and collab services directly, using URLs
+# baked in at build time via VITE_DOC_SERVICE_URL / VITE_COLLAB_WS_URL.
 endpoints:
   - name: webapp
     port: 8080
@@ -17,12 +18,12 @@ endpoints:
 # Declared for ordering and topology; the URLs themselves are build-time values.
 dependencies:
   endpoints:
-    - component: gcp-document
+    - component: pkt-document
       name: api
       visibility: project
       envBindings:
         address: DOC_SERVICE_ADDR
-    - component: gcp-collab
+    - component: pkt-collab
       name: ws
       visibility: project
       envBindings:
