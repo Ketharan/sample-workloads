@@ -1,0 +1,24 @@
+apiVersion: openchoreo.dev/v1alpha1
+kind: Component
+metadata:
+  name: "gcp-collab"
+  namespace: default
+spec:
+  autoDeploy: true
+  componentType:
+    kind: ClusterComponentType
+    name: deployment/service
+  owner:
+    projectName: "doclet-gcp"
+  workflow:
+    kind: ClusterWorkflow
+    name: "gcp-buildpacks-builder"
+    parameters:
+      buildEnv:
+        - name: GOOGLE_BUILDABLE
+          value: ./cmd
+      repository:
+        appPath: "/project-doclet-app/service-go-collab"
+        revision:
+          branch: "doclet-gcp-buildpacks"
+        url: "https://github.com/Ketharan/sample-workloads"

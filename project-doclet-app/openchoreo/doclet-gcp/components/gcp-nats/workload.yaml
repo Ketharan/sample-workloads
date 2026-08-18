@@ -1,0 +1,20 @@
+apiVersion: openchoreo.dev/v1alpha1
+kind: Workload
+metadata:
+  labels:
+    openchoreo.dev/component: "gcp-nats"
+  name: "gcp-nats-workload"
+  namespace: default
+spec:
+  container:
+    args:
+      - "--http_port"
+      - "8222"
+    image: "nats:2.10-alpine"
+  endpoints:
+    tcp:
+      port: 4222
+      type: TCP
+  owner:
+    componentName: "gcp-nats"
+    projectName: "doclet-gcp"
