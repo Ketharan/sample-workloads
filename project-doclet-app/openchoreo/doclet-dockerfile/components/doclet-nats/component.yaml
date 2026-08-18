@@ -1,0 +1,24 @@
+apiVersion: openchoreo.dev/v1alpha1
+kind: Component
+metadata:
+  name: "doclet-nats"
+  namespace: default
+spec:
+  autoDeploy: true
+  componentType:
+    kind: ClusterComponentType
+    name: deployment/service
+  owner:
+    projectName: "doclet-dockerfile"
+  workflow:
+    kind: ClusterWorkflow
+    name: "dockerfile-builder"
+    parameters:
+      docker:
+        context: "/project-doclet-app/nats"
+        filePath: "/project-doclet-app/nats/Dockerfile"
+      repository:
+        appPath: "/project-doclet-app/nats"
+        revision:
+          branch: "add-doclet-workload-descriptors"
+        url: "https://github.com/Ketharan/sample-workloads"

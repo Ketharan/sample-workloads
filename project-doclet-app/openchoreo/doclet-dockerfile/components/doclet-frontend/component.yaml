@@ -1,0 +1,27 @@
+apiVersion: openchoreo.dev/v1alpha1
+kind: Component
+metadata:
+  name: "doclet-frontend"
+  namespace: default
+spec:
+  autoDeploy: true
+  componentType:
+    kind: ClusterComponentType
+    name: deployment/service
+  owner:
+    projectName: "doclet-dockerfile"
+  workflow:
+    kind: ClusterWorkflow
+    name: "dockerfile-builder"
+    parameters:
+      buildArgs:
+        - name: VITE_BASE_PATH
+          value: "/doclet-frontend-webapp/"
+      docker:
+        context: "/project-doclet-app/webapp-react-frontend"
+        filePath: "/project-doclet-app/webapp-react-frontend/Dockerfile"
+      repository:
+        appPath: "/project-doclet-app/webapp-react-frontend"
+        revision:
+          branch: "add-doclet-workload-descriptors"
+        url: "https://github.com/Ketharan/sample-workloads"
