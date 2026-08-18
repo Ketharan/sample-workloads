@@ -38,6 +38,7 @@ describe both.
 |---|---|---|---|
 | `add-doclet-workload-descriptors` | `doclet-dockerfile` | nginx image, proxies `/api` + `/ws` | `project` visibility |
 | `doclet-gcp-buildpacks` | `doclet-gcp` | GCP buildpacks + `serve` | `external` visibility, called directly by the browser |
+| `doclet-paketo-buildpacks` | `doclet-paketo` | Paketo + `BP_WEB_SERVER=nginx` | `external` visibility, called directly by the browser |
 
 ## Build variables that matter
 

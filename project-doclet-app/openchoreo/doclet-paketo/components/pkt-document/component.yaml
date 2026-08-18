@@ -1,0 +1,24 @@
+apiVersion: openchoreo.dev/v1alpha1
+kind: Component
+metadata:
+  name: "pkt-document"
+  namespace: default
+spec:
+  autoDeploy: true
+  componentType:
+    kind: ClusterComponentType
+    name: deployment/service
+  owner:
+    projectName: "doclet-paketo"
+  workflow:
+    kind: ClusterWorkflow
+    name: "paketo-buildpacks-builder"
+    parameters:
+      buildEnv:
+        - name: BP_GO_TARGETS
+          value: ./cmd
+      repository:
+        appPath: "/project-doclet-app/service-go-document"
+        revision:
+          branch: "doclet-paketo-buildpacks"
+        url: "https://github.com/Ketharan/sample-workloads"
