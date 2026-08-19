@@ -12,17 +12,17 @@ endpoints:
 
 dependencies:
   endpoints:
-    - component: lab-api-service
+    - component: labg-api-service
       name: api
       visibility: project
       envBindings:
         address: API_SERVICE_URL
-    - component: lab-analytics-service
+    - component: labg-analytics-service
       name: analytics-api
       visibility: project
       envBindings:
         address: ANALYTICS_SERVICE_URL
-    - component: lab-auth-service
+    - component: labg-auth-service
       name: auth-api
       visibility: project
       envBindings:
