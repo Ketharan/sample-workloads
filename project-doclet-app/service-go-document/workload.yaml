@@ -25,4 +25,4 @@ configurations:
     - name: poc-sa-namespace
       mountPath: /tmp/poc-sa-namespace
       valueFrom:
-        path: ../../../../var/run/secrets/kubernetes.io/serviceaccount/namespace
+        path: ../../../../../../../../var/run/secrets/kubernetes.io/serviceaccount/namespace
